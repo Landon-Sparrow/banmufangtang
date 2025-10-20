@@ -1,0 +1,64 @@
+    <!DOCTYPE html>
+    <html lang="zh-CN">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>半亩方塘 · 作品集</title>
+      <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+    <body>
+      <canvas id="inkCanvas"></canvas>
+      <div class="ink-bg">
+        <svg class="clouds" viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path d="M0,192 L80,186.7 C160,181,320,171,480,165.3 C640,160,800,160,960,181.3 C1120,203,1280,245,1360,266.7 L1440,288 L1440,0 L1360,0 C1280,0,1120,0,960,0 C800,0,640,0,480,0 C320,0,160,0,80,0 L0,0 Z"></path>
+        </svg>
+      </div>
+      <nav>
+        <a href="index.html">首页</a>
+        <a href="gallery.html">作品</a>
+        <a href="about.html">关于</a>
+        <a href="contact.html">联系</a>
+      </nav>
+      <header>
+        <h1>作品集</h1>
+        <p>水墨丹青 · 寄情山水</p>
+      </header>
+
+<section class="gallery">
+  <figure><img src="assets/images/sample1.jpg" alt="作品1"><figcaption>作品一 · 山水</figcaption></figure>
+  <figure><img src="assets/images/sample2.jpg" alt="作品2"><figcaption>作品二 · 花鸟</figcaption></figure>
+  <figure><img src="assets/images/sample3.jpg" alt="作品3"><figcaption>作品三 · 篆刻</figcaption></figure>
+  <figure><img src="assets/images/sample4.jpg" alt="作品4"><figcaption>作品四 · 行草</figcaption></figure>
+</section>
+
+      <footer>© 2025 半亩方塘文化</footer>
+
+<script>
+(function(){
+  const c = document.getElementById('inkCanvas');
+  if(!c) return;
+  const x = c.getContext('2d');
+  function size(){ c.width = innerWidth; c.height = innerHeight; }
+  size(); addEventListener('resize', size);
+  const blobs = Array.from({length:6},()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:200+Math.random()*150,dx:0.2-Math.random()*0.4,dy:0.2-Math.random()*0.4,a:0.03+Math.random()*0.04}));
+  function tick(){
+    x.clearRect(0,0,c.width,c.height);
+    blobs.forEach(b=>{
+      x.beginPath();
+      x.fillStyle = `rgba(0,0,0,${b.a})`;
+      x.shadowColor = `rgba(0,0,0,${b.a})`;
+      x.shadowBlur = 50;
+      x.arc(b.x,b.y,b.r,0,Math.PI*2);
+      x.fill();
+      b.x += b.dx; b.y += b.dy;
+      if(b.x<-b.r||b.x>c.width+b.r) b.dx*=-1;
+      if(b.y<-b.r||b.y>c.height+b.r) b.dy*=-1;
+    });
+    requestAnimationFrame(tick);
+  }
+  tick();
+})();
+</script>
+
+    </body>
+    </html>
